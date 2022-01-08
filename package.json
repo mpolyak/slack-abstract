@@ -1,0 +1,20 @@
+{
+  "name": "slack-abstract",
+  "version": "0.1.0",
+  "description": "Abstract art Slack avatar",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "open http://localhost:8000/prototype.html && python3 -m http.server 8000",
+    "gif": "./scripts/gif.sh",
+    "start": "node .",
+    "start:local": "./scripts/start.sh",
+    "test": "./scripts/test.sh"
+  },
+  "author": "Michael Polyak",
+  "license": "MIT",
+  "dependencies": {
+    "pngjs": "^6.0.0"
+  }
+}

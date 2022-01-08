@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="logo.png"/>
+    <style>
+        div {
+            display: flex;
+            flex-direction: row;
+        }
+
+        canvas {
+            margin: 4px;
+        }
+    </style>
+    <script type="module" src="src/game.mjs"></script>
+    <script type="module" >
+        import {GameOfLife} from "./src/game.mjs";
+
+        function main(ctx) {
+            const game = GameOfLife.create(512, 512, (x, y) => !(x % 4 && y % 7));
+
+            const frame = new ImageData(game.frame, 512);
+            const image = new ImageData(game.image, 512);
+
+            function step() {
+                game.update();
+
+                document.title = game.generation;
+
+                ctx.frame.putImageData(frame, 0, 0);
+                ctx.image.putImageData(image, 0, 0);
+                
+                window.requestAnimationFrame(step);
+            }
+
+            step();
+        }
+
+        window.onload = function() {
+            const ctx = {
+                frame: document.getElementById("frame").getContext("2d"),
+                image: document.getElementById("image").getContext("2d"),
+            };
+
+            main(ctx);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <canvas id="frame" width="512" height="512"></canvas>
+        <canvas id="image" width="512" height="512"></canvas>
+    </div>
+</body>
+</html>
