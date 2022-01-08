@@ -13,6 +13,8 @@ See the avatar evolve by running `npm start dev` (python3 is required), and navi
 
 2. Set `SAVE_GAME` to the filename where the current avatar state will be stored between runs.
 
+3. Run `npm install` to install project dependencies.
+
 ## Running
 - Run `npm start` to update the avatar once.
 - Run `npm run start:local` to continuously update the avatar every 15 seconds.
