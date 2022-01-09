@@ -20,7 +20,7 @@
         function main(ctx) {
             const game = GameOfLife.create(512, 512, (x, y) => !(x % 4 && y % 7));
 
-            const frame = new ImageData(game.frame, 512);
+            const board = new ImageData(game.board, 512);
             const image = new ImageData(game.image, 512);
 
             function step() {
@@ -28,7 +28,7 @@
 
                 document.title = game.generation;
 
-                ctx.frame.putImageData(frame, 0, 0);
+                ctx.board.putImageData(board, 0, 0);
                 ctx.image.putImageData(image, 0, 0);
                 
                 window.requestAnimationFrame(step);
@@ -39,7 +39,7 @@
 
         window.onload = function() {
             const ctx = {
-                frame: document.getElementById("frame").getContext("2d"),
+                board: document.getElementById("board").getContext("2d"),
                 image: document.getElementById("image").getContext("2d"),
             };
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 <body>
-    <canvas id="frame" width="512" height="512"></canvas>
+    <canvas id="board" width="512" height="512"></canvas>
     <canvas id="image" width="512" height="512"></canvas>
 </body>
 </html>

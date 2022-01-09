@@ -1,12 +1,12 @@
 import {hsl2rgb} from "./color.mjs";
 
 export class GameOfLife {
-    static version = 1;
+    static version = 2;
 
     static create(width, height, seedFn) {
         const size = width * height * 4;
 
-        const frame = new Uint8ClampedArray(size);
+        const board = new Uint8ClampedArray(size);
         const image = new Uint8ClampedArray(size);
 
         const [r, g, b] = hsl2rgb(0, 0.8, 0.5);
@@ -15,16 +15,16 @@ export class GameOfLife {
             for (let x = 0; x < width; x ++) {
                 const p = (y * width + x) * 4;
 
-                frame[p + 0] = r;
-                frame[p + 1] = g;
-                frame[p + 2] = b;
-                frame[p + 3] = seedFn(x, y) ? 255 : 0;
+                board[p + 0] = r;
+                board[p + 1] = g;
+                board[p + 2] = b;
+                board[p + 3] = seedFn(x, y) ? 255 : 0;
             }
         }
 
         image.fill(255);
 
-        return new GameOfLife(width, height, 0, frame, image);
+        return new GameOfLife(width, height, 0, board, image);
     }
 
     static deserialize(text) {
@@ -37,19 +37,26 @@ export class GameOfLife {
         });
 
         if (obj.version !== GameOfLife.version) {
-            throw new Error(
-                `Version ${GameOfLife.version} cannot deserialize version ${obj.version}`);
+            switch (obj.version) {
+                case 1:
+                    obj.board = obj.frame;
+                    break;
+
+                default:
+                    throw new Error(
+                        `Version ${GameOfLife.version} cannot deserialize version ${obj.version}`);
+            }
         }
 
         return new GameOfLife(
             obj.width,
             obj.height,
             obj.generation,
-            obj.frame,
+            obj.board,
             obj.image);
     }
 
-    constructor(width, height, generation, frame, image) {
+    constructor(width, height, generation, board, image) {
         this.version = GameOfLife.version;
 
         this.width = width;
@@ -57,15 +64,15 @@ export class GameOfLife {
         
         this.generation = generation;
 
-        this.frame = frame;
+        this.board = board;
         this.image = image;
 
-        this._frame = new Uint8ClampedArray(frame);
+        this._board = new Uint8ClampedArray(board);
     }
 
     serialize() {
         return JSON.stringify(this, (key, value) => {
-            if (key === "_frame") {
+            if (key === "_board") {
                 return undefined;
             }
 
@@ -102,7 +109,7 @@ export class GameOfLife {
                             s += this.width;
                         }
 
-                        if (this.frame[(r * this.width + s) * 4 + 3]) {
+                        if (this.board[(r * this.width + s) * 4 + 3]) {
                             l ++;
                         }
                     }
@@ -110,9 +117,9 @@ export class GameOfLife {
 
                 const p = (y * this.width + x) * 4;
 
-                if (this.frame[p + 3]) {
+                if (this.board[p + 3]) {
                     if (l < 2 || l > 3) {
-                        this._frame[p + 3] = 0;
+                        this._board[p + 3] = 0;
                     }
                 } else if (l === 3) {
                     let r = 0;
@@ -128,10 +135,10 @@ export class GameOfLife {
 
                             const q = (v * this.width + u) * 4;
 
-                            if (this._frame[q + 3]) {
-                                r += Math.pow(this._frame[q + 0], 2);
-                                g += Math.pow(this._frame[q + 1], 2);
-                                b += Math.pow(this._frame[q + 2], 2);
+                            if (this._board[q + 3]) {
+                                r += Math.pow(this._board[q + 0], 2);
+                                g += Math.pow(this._board[q + 1], 2);
+                                b += Math.pow(this._board[q + 2], 2);
                                 n ++;
                             }
                         }
@@ -147,15 +154,15 @@ export class GameOfLife {
                         b = color[2];
                     }
 
-                    this._frame[p + 0] = r;
-                    this._frame[p + 1] = g;
-                    this._frame[p + 2] = b;
-                    this._frame[p + 3] = 255;
+                    this._board[p + 0] = r;
+                    this._board[p + 1] = g;
+                    this._board[p + 2] = b;
+                    this._board[p + 3] = 255;
                 }
             }
         }
 
-        this.frame.set(this._frame);
+        this.board.set(this._board);
 
         for (let y = 0; y < this.height; y += 8) {
             for (let x = 0; x < this.width; x += 8) {
@@ -168,9 +175,9 @@ export class GameOfLife {
                     for (let u = x; u < x + 8; u ++) {
                         const p = (v * this.width + u) * 4;
 
-                        r += Math.pow(this.frame[p + 0], 2);
-                        g += Math.pow(this.frame[p + 1], 2);
-                        b += Math.pow(this.frame[p + 2], 2);
+                        r += Math.pow(this.board[p + 0], 2);
+                        g += Math.pow(this.board[p + 1], 2);
+                        b += Math.pow(this.board[p + 2], 2);
                         n ++;
                     }
                 }
