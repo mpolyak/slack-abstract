@@ -1,9 +1,11 @@
 # slack-abstract
 [Slack](https://slack.com) avatar generated with [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in the [Abstract art](https://en.wikipedia.org/wiki/Abstract_art) minimalist style.
 
-![avatar](example.gif)
+![avatar animation](example.gif)
 
 On the left is the colorized Game of Life board, on the right is the avatar image composition.
+
+The initial seed chosen evolves to a pattern of horizontal lines stretching across the board, travelling vertically in a destructive and reflective pattern that repeats infinitely.
 
 ## Development
 See the avatar evolve by running `npm start dev` (python3 is required), and navigating to `http://localhost:8000/prototype.html`.
