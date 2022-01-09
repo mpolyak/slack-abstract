@@ -3,6 +3,8 @@
 
 ![avatar](example.gif)
 
+On the left is the colorized Game of Life board, on the right is the avatar image composition.
+
 ## Development
 See the avatar evolve by running `npm start dev` (python3 is required), and navigating to `http://localhost:8000/prototype.html`.
 
