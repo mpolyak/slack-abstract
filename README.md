@@ -3,7 +3,7 @@
 
 ![avatar animation](example.gif)
 
-On the left is the colorized Game of Life board, on the right is the avatar image composition.
+On the left is the colorized Game of Life board, on the right the avatar image composition.
 
 The initial seed chosen evolves to a pattern of horizontal lines stretching across the board, travelling vertically in a destructive and reflective pattern that repeats infinitely.
 
