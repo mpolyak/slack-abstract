@@ -1,5 +1,5 @@
 # slack-abstract
-A [Slack](https://slack.com) avatar generated using [cellular automaton](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in the minimalist [Abstract art](https://en.wikipedia.org/wiki/Abstract_art) style.
+[Slack](https://slack.com) avatar generated using [cellular automaton](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in the [Abstract art](https://en.wikipedia.org/wiki/Abstract_art) minimalist style.
 
 ![avatar](example.gif)
 
