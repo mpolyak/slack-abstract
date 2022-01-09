@@ -98,7 +98,6 @@ export class GameOfLife {
                         if (r < 0) {
                             r += this.height;
                         }
-
                         if (s < 0) {
                             s += this.width;
                         }
