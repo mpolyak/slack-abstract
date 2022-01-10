@@ -5,7 +5,7 @@
 
 On the left is the colorized Game of Life board, on the right the avatar image composition.
 
-The chosen initial seed evolves to a pattern of horizontal lines stretching across the board, travelling vertically as destructive and reflective waves that repeat infinitely.
+The selected initial seed evolves to a pattern of horizontal lines stretching across the board, travelling vertically as destructive and reflective waves that infinitely repeat.
 
 ## Development
 See the avatar evolve by running `npm start dev` (python3 is required), and navigating to `http://localhost:8000/prototype.html`.
