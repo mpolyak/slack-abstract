@@ -7,6 +7,10 @@ On the left is the colorized Game of Life board, on the right the avatar image c
 
 The selected initial seed evolves to a pattern of horizontal lines stretching across the board, travelling vertically as destructive and reflective waves that infinitely repeat.
 
+## Meaning
+
+This is an attempt to explore Abstract art. I imagine that there is a process, a set of rules, that manifests the visual. Maybe it is the evolution over time that carries meaning?
+
 ## Development
 See the avatar evolve by running `npm start dev` (python3 is required), and navigating to `http://localhost:8000/prototype.html`.
 
