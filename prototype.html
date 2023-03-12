@@ -22,6 +22,7 @@
 
             const board = new ImageData(game.board, 512);
             const image = new ImageData(game.image, 512);
+            const dream = new ImageData(game.dream, 512);
 
             function step() {
                 game.update();
@@ -30,6 +31,7 @@
 
                 ctx.board.putImageData(board, 0, 0);
                 ctx.image.putImageData(image, 0, 0);
+                ctx.dream.putImageData(dream, 0, 0);
                 
                 window.requestAnimationFrame(step);
             }
@@ -41,6 +43,7 @@
             const ctx = {
                 board: document.getElementById("board").getContext("2d"),
                 image: document.getElementById("image").getContext("2d"),
+                dream: document.getElementById("dream").getContext("2d"),
             };
 
             main(ctx);
@@ -50,5 +53,6 @@
 <body>
     <canvas id="board" width="512" height="512"></canvas>
     <canvas id="image" width="512" height="512"></canvas>
+    <canvas id="dream" width="512" height="512"></canvas>
 </body>
 </html>

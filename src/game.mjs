@@ -1,4 +1,5 @@
 import {hsl2rgb} from "./color.mjs";
+import {CPPN} from "./nnet.mjs";
 
 export class GameOfLife {
     static version = 2;
@@ -66,13 +67,19 @@ export class GameOfLife {
 
         this.board = board;
         this.image = image;
+        this.dream = new Uint8ClampedArray(image);
 
         this._board = new Uint8ClampedArray(board);
+        this._net = new CPPN(12345)
+            .layer(3)
+            .layer(4, (x) => Math.cos(x))
+            .layer(4, (x) => Math.tanh(x))
+            .layer(3, (x) => Math.sin(x));
     }
 
     serialize() {
         return JSON.stringify(this, (key, value) => {
-            if (key === "_board") {
+            if (key.startsWith("_")) {
                 return undefined;
             }
 
@@ -195,6 +202,21 @@ export class GameOfLife {
                         this.image[p + 2] = b;
                     }
                 }
+            }
+        }
+
+        for (let y = 0; y < this.height; y ++) {
+            for (let x = 0; x < this.width; x ++) {
+                const out = this._net.forward(
+                    (x / (this.width / 2)) - 1,
+                    (y / (this.height / 2)) - 1,
+                    (this.generation % 1_000_000) / 100);
+
+                const p = (y * this.width + x) * 4;
+
+                this.dream[p + 0] = ~~(255 * Math.pow(this.image[p + 0] / 255, out[0] + 1.75));
+                this.dream[p + 1] = ~~(255 * Math.pow(this.image[p + 1] / 255, out[1] + 1.75));
+                this.dream[p + 2] = ~~(255 * Math.pow(this.image[p + 2] / 255, out[2] + 1.75));
             }
         }
     }

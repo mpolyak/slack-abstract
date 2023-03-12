@@ -55,7 +55,7 @@ function main() {
         height: game.height,
     });
 
-    png.data.set(game.image);
+    png.data.set(game.dream);
 
     const formData = new FormData()
         .addString("token", SLACK_TOKEN)
